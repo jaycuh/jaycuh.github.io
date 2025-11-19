@@ -33,9 +33,37 @@
       height: 100%;
       border: none;
     }
-     body {
-       background-image: url("https://giffiles.alphacoders.com/221/221818.gif");
-       background-color: #cccccc;
+
+    body {
+      background-image: url("https://giffiles.alphacoders.com/221/221818.gif");
+      background-color: #cccccc;
+    }
+
+    .view-counter {
+      margin-top: 20px;
+      width: 160px;
+      height: 60px;
+      background: rgba(0,0,0,0.6);      
+      border: 1px solid rgba(255,255,255,0.25); 
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: monospace;
+      color: #fff;
+    }
+
+    .view-counter svg {
+      width: 24px;
+      height: 24px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
     }
   </style>
 </head>
@@ -89,43 +117,68 @@
             <i class="fa-brands fa-instagram"></i>
             <span class="tooltip">Instagram</span>
           </a>
-            <a href="https://open.spotify.com/user/31vjuimxdbvnaqkcr74kqogzc2ui?si=1e9391d134564bda" target="_blank" class="social-icon" data-tooltip="Spotify">
+          <a href="https://open.spotify.com/user/31vjuimxdbvnaqkcr74kqogzc2ui?si=1e9391d134564bda" target="_blank" class="social-icon" data-tooltip="Spotify">
             <i class="fa-brands fa-spotify"></i>
-              <span class="tooltip">Spotify</span>
+            <span class="tooltip">Spotify</span>
           </a>
         </div>
       </div>
 
       <div class="widget">
-       <iframe src="https://spot.on-to.space/spotwidget.html?user=31vjuimxdbvnaqkcr74kqogzc2ui&bg=%231f1f1f&text=%23f28ab2" width="350" height="162" frameborder="0" allowtransparency="true" style="border-radius:12px;"></iframe>
+        <iframe src="https://spot.on-to.space/spotwidget.html?user=31vjuimxdbvnaqkcr74kqogzc2ui&bg=%231f1f1f&text=%23f28ab2" width="350" height="162" frameborder="0" allowtransparency="true" style="border-radius:12px;"></iframe>
+      </div>
+
+      <div class="view-counter">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span id="view-number">—</span>
       </div>
 
     </div>
   </div>
 
   <script>
-// fetch my api
-   fetch('https://fmode.is-a.dev/api/profile')
-  .then(response => response.json())
-  .then(data => {
-    const avatarUrl = data.avatar;
-// pproxied cuz dns from my school
-    const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(avatarUrl)}`;
-    document.getElementById('profile-img').src = proxyUrl; 
-  })
-  .catch(error => {
-    console.error('Error fetching profile data:', error);
+  // fetch my api
+  fetch('https://fmode.is-a.dev/api/profile')
+    .then(response => response.json())
+    .then(data => {
+      const avatarUrl = data.avatar;
+      // proxied cuz dns from my school
+      const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(avatarUrl)}`;
+      document.getElementById('profile-img').src = proxyUrl; 
+    })
+    .catch(error => {
+      console.error('Error fetching profile data:', error);
+    });
+
+  document.getElementById('enter-screen').addEventListener('click', () => {
+    document.getElementById('enter-screen').style.display = 'none';
+    document.querySelector('.bio-container').style.display = 'block';
+    setTimeout(() => {
+      document.querySelector('.bio-container').style.opacity = '1';
+    }, 50);
+    document.getElementById('bg-music').play();
   });
 
-
-    document.getElementById('enter-screen').addEventListener('click', () => {
-      document.getElementById('enter-screen').style.display = 'none';
-      document.querySelector('.bio-container').style.display = 'block';
-      setTimeout(() => {
-        document.querySelector('.bio-container').style.opacity = '1';
-      }, 50);
-      document.getElementById('bg-music').play();
-    });
+  (async () => {
+    try {
+      if (!localStorage.getItem("viewed")) {
+        const res = await fetch("/api/hits?path=profile", { cache: "no-store" });
+        const data = await res.json();
+        document.getElementById("view-number").textContent = data.count ?? "0";
+        localStorage.setItem("viewed", "true");
+      } else {
+        const res = await fetch("/api/hits?path=profile&readonly=true", { cache: "no-store" });
+        const data = await res.json();
+        document.getElementById("view-number").textContent = data.count ?? "0";
+      }
+    } catch (err) {
+      document.getElementById("view-number").textContent = "error";
+      console.error(err);
+    }
+  })();
   </script>
 
   <script src="/assets/js/oneko.js" defer></script>
