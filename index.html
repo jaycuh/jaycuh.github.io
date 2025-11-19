@@ -40,10 +40,12 @@
     }
 
     .view-counter {
-      margin-top: 20px;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
       width: 160px;
       height: 60px;
-      background: rgba(0,0,0,0.6);      
+      background: rgba(0,0,0,0.6);       
       border: 1px solid rgba(255,255,255,0.25); 
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -52,10 +54,9 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-left: auto;
-      margin-right: auto;
       font-family: monospace;
       color: #fff;
+      z-index: 9999; 
     }
 
     .view-counter svg {
@@ -128,15 +129,15 @@
         <iframe src="https://spot.on-to.space/spotwidget.html?user=31vjuimxdbvnaqkcr74kqogzc2ui&bg=%231f1f1f&text=%23f28ab2" width="350" height="162" frameborder="0" allowtransparency="true" style="border-radius:12px;"></iframe>
       </div>
 
-      <div class="view-counter">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
-        <span id="view-number">—</span>
-      </div>
-
     </div>
+  </div>
+
+  <div class="view-counter">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <span id="view-number">—</span>
   </div>
 
   <script>
