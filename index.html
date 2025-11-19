@@ -166,12 +166,12 @@
   (async () => {
     try {
       if (!localStorage.getItem("viewed")) {
-        const res = await fetch("/api/hits?path=profile", { cache: "no-store" });
+        const res = await fetch("https://websiteviewcount.vercel.app/api/hits?path=profile", { cache: "no-store" });
         const data = await res.json();
         document.getElementById("view-number").textContent = data.count ?? "0";
         localStorage.setItem("viewed", "true");
       } else {
-        const res = await fetch("/api/hits?path=profile&readonly=true", { cache: "no-store" });
+        const res = await fetch("https://websiteviewcount.vercel.app/api/hits?path=profile&readonly=true", { cache: "no-store" });
         const data = await res.json();
         document.getElementById("view-number").textContent = data.count ?? "0";
       }
