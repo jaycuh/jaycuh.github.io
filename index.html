@@ -41,27 +41,26 @@
 
     .view-counter {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 160px;
-      height: 60px;
-      background: rgba(0,0,0,0.6);       
-      border: 1px solid rgba(255,255,255,0.25); 
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      backdrop-filter: blur(6px);
-      display: flex;
+      bottom: 15px;
+      left: 15px;
+      padding: 6px 10px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      backdrop-filter: blur(4px);
+      display: none; 
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      gap: 6px;
       font-family: monospace;
+      font-size: 0.9rem;
       color: #fff;
-      z-index: 9999; 
+      z-index: 9999;
     }
 
     .view-counter svg {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       stroke: #fff;
       fill: none;
       stroke-width: 2;
@@ -132,7 +131,7 @@
     </div>
   </div>
 
-  <div class="view-counter">
+  <div class="view-counter" id="view-counter">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
       <circle cx="12" cy="12" r="3"/>
@@ -146,7 +145,6 @@
     .then(response => response.json())
     .then(data => {
       const avatarUrl = data.avatar;
-      // proxied cuz dns from my school
       const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(avatarUrl)}`;
       document.getElementById('profile-img').src = proxyUrl; 
     })
@@ -154,16 +152,16 @@
       console.error('Error fetching profile data:', error);
     });
 
-  document.getElementById('enter-screen').addEventListener('click', () => {
+  document.getElementById('enter-screen').addEventListener('click', async () => {
     document.getElementById('enter-screen').style.display = 'none';
     document.querySelector('.bio-container').style.display = 'block';
     setTimeout(() => {
       document.querySelector('.bio-container').style.opacity = '1';
     }, 50);
     document.getElementById('bg-music').play();
-  });
 
-  (async () => {
+    document.getElementById('view-counter').style.display = 'flex';
+
     try {
       if (!localStorage.getItem("viewed")) {
         const res = await fetch("https://websiteviewcount.vercel.app/api/hits?path=profile", { cache: "no-store" });
@@ -179,7 +177,7 @@
       document.getElementById("view-number").textContent = "error";
       console.error(err);
     }
-  })();
+  });
   </script>
 
   <script src="/assets/js/oneko.js" defer></script>
