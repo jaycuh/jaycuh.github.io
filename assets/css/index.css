@@ -249,3 +249,121 @@ body {
 		transform: translateY(0);
 	}
 }
+
+.mockup {
+    position: relative;
+    width: 520px;
+    height: 380px;
+}
+
+.album {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 380px;
+
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.art {
+    flex: 1;
+    background-image: url("https://i.scdn.co/image/ab67616d0000b273b45ecf686d0abc749d950597");
+    background-size: cover;
+    background-position: center;
+
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+.info {
+    padding: 18px;
+    text-align: center;
+}
+
+.band {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.title {
+    font-size: 26px;
+    margin-top: 8px;
+    color: #111;
+}
+
+.cd {
+    position: absolute;
+    left: 300px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #222 0%, #000 70%);
+    box-shadow: 0 0 35px rgba(0,0,0,0.4);
+    z-index: 1;
+
+    animation: spin 8s linear infinite;
+}
+
+.cd::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        repeating-radial-gradient(
+            circle,
+            rgba(255,255,255,0.08) 0px,
+            rgba(255,255,255,0.08) 1px,
+            transparent 2px,
+            transparent 6px
+        );
+}
+
+.label {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-image: url("https://i.scdn.co/image/ab67616d0000b273b45ecf686d0abc749d950597");
+    background-size: cover;
+    background-position: center;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hole {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #f2f2f2;
+    border-radius: 50%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
